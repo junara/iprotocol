@@ -1,0 +1,8 @@
+div.container.d-print-none
+  = bootstrap_form_with scope: :protocol, url: root_path, method: :get do |f|
+    = f.text_field :google_spreadsheet_url, value: @sheet ? @sheet.spreadsheet_url : nil
+    = f.submit 'プロトコールを表示する'
+  = link_to '説明書', root_path(google_spreadsheet_id: '1lx_9I5JfktHGw2WTvjpPGGWLSmP0lfJcOWZstHmlPS4')
+div#recipe-container
+  - if @sheet.present?
+    = render partial: 'recipe', locals: {sheet: @sheet}

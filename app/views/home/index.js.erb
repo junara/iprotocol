@@ -1,0 +1,5 @@
+<% if @sheet %>
+$("#recipe-container").html(
+  "<%= j(render partial: 'recipe', locals: {sheet: @sheet}) %>"
+);
+<% end %>

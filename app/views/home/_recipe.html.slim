@@ -1,0 +1,38 @@
+- sheet.get_protocol
+- sheet.get_reagent
+- protocol = sheet.protocol
+- reagent = sheet.reagent
+
+div.container
+  div.my-5
+    div.h2.text-success
+      = link_to protocol.title_value.text, sheet.spreadsheet_url
+  div.row
+    div.col-sm
+      = image_tag protocol.description_value.photo, class: 'img-fluid img-thumbnail'
+    div.col-sm
+      div
+        p.lead.text-dark
+          = protocol.description_value.text
+      div
+        div.d-flex.align-items-baseline
+          div.h3.text-black-50 材料
+          div.ml-3.text-black-50 = "（#{reagent.servings_for_string}）"
+      div
+        table.table
+          tbody
+            - reagent.reagents_list_values.each do |value|
+              tr
+                th.text-black-50 = value.name
+                td = value.quantity
+  div.my-5
+    div.row
+      - protocol.steps_values.each.with_index(1) do |value, i|
+        div.col-sm-3
+          div.h3.text-black-50 = i
+          - if value.photo.present?
+            div
+              = image_tag value.photo, class: 'img-fluid img-thumbnail'
+          div
+            p.lead.text-secondary = value.text
+

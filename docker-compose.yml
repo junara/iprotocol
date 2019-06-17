@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    env_file: .env
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: >
+      bash -c "
+        rm -f /myapp/tmp/pids/server.pid &&
+        bundle exec rails s -p 3000 -b '0.0.0.0'
+      "
+    env_file: .env
+    volumes:
+      - .:/myapp
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+  webpack-dev-server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ./bin/webpack-dev-server
+    env_file: .env
+    volumes:
+      - .:/myapp
+    ports:
+      - '3035:3035'
