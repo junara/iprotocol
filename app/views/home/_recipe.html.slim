@@ -67,8 +67,11 @@ div.d-block.d-sm-none.d-print-none
           div.row.no-gutters
             div.col-1
               div = i
-            div.col-7
-              p.text-secondary = value.text
             - if value.photo.present?
+              div.col-7
+                p.text-secondary = value.text
               div.col-4
                 = image_tag value.photo, class: 'img-fluid img-thumbnail'
+            - else
+              div.col-11
+                p.text-secondary = value.text
