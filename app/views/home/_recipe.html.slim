@@ -6,7 +6,7 @@
 div.container.d-none.d-sm-block
   div.my-5
     div.h2.text-success
-      = link_to protocol.title_value.text, sheet.spreadsheet_url
+      = link_to protocol.title_value.text, sheet.spreadsheet_url, class: 'text-decoration-none text-secondary'
   div.row
     div.col-sm
       = image_tag protocol.description_value.photo, class: 'img-fluid img-thumbnail'
@@ -42,7 +42,7 @@ div.d-block.d-sm-none.d-print-none
       div
         = image_tag protocol.description_value.photo, class: 'img-fluid'
     div.h2.text-success.p-3.mb-0
-      = link_to protocol.title_value.text, sheet.spreadsheet_url
+      = link_to protocol.title_value.text, sheet.spreadsheet_url, class: 'text-decoration-none text-secondary'
     div.p-3
       p.text-dark
         = protocol.description_value.text
@@ -67,8 +67,11 @@ div.d-block.d-sm-none.d-print-none
           div.row.no-gutters
             div.col-1
               div = i
-            div.col-7
-              p.text-secondary = value.text
             - if value.photo.present?
+              div.col-7
+                p.text-secondary = value.text
               div.col-4
                 = image_tag value.photo, class: 'img-fluid img-thumbnail'
+            - else
+              div.col-11
+                p.text-secondary = value.text
