@@ -3,7 +3,7 @@
 - protocol = sheet.protocol
 - reagent = sheet.reagent
 
-div.container
+div.container.d-none.d-sm-block
   div.my-5
     div.h2.text-success
       = link_to protocol.title_value.text, sheet.spreadsheet_url
@@ -36,3 +36,39 @@ div.container
           div
             p.lead.text-secondary = value.text
 
+div.d-block.d-sm-none.d-print-none
+  div
+    div.w-100
+      div
+        = image_tag protocol.description_value.photo, class: 'img-fluid'
+    div.h2.text-success.p-3.mb-0
+      = link_to protocol.title_value.text, sheet.spreadsheet_url
+    div.p-3
+      p.text-dark
+        = protocol.description_value.text
+    div
+      div.bg-warning.p-3
+        div.d-flex.align-items-baseline
+          div.h4.text-white.mb-0 材料
+          div.text-white = "（#{reagent.servings_for_string}）"
+      div
+        table.table
+          tbody
+            - reagent.reagents_list_values.each do |value|
+              tr
+                th.text-black-50 = value.name
+                td = value.quantity
+  div.my-5
+    div.bg-warning.p-3
+      div.h4.text-white.mb-0 手順
+    div
+      - protocol.steps_values.each.with_index(1) do |value, i|
+        div.p-2.border-bottom
+          div.row.no-gutters
+            div.col-1
+              div = i
+            div.col-7
+              p.text-secondary = value.text
+            - if value.photo.present?
+              div.col-4
+                = image_tag value.photo, class: 'img-fluid img-thumbnail'
