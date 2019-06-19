@@ -1,8 +1,18 @@
-div.container.d-print-none
-  = bootstrap_form_with scope: :protocol, url: root_path, method: :get do |f|
-    = f.text_field :google_spreadsheet_url, value: @sheet ? @sheet.spreadsheet_url : nil
-    = f.submit 'プロトコールを表示する'
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  = link_to 'myProtocol', root_path, class: 'navbar-brand display-1'
+  div.container.d-print-none.d-none.d-sm-block
+    = form_with scope: :protocol, url: root_path, method: :get do |f|
+      .input-group
+        = f.text_field :google_spreadsheet_url, value: @sheet ? @sheet.spreadsheet_url : nil, class: 'form-control'
+        .input-group-append
+          = f.submit '表示'
   = link_to '説明書', root_path(google_spreadsheet_id: '1lx_9I5JfktHGw2WTvjpPGGWLSmP0lfJcOWZstHmlPS4')
+  div.container.d-print-none.d-sm-none.d-print-none.pt-2
+    = form_with scope: :protocol, url: root_path, method: :get, class: 'w-100' do |f|
+      .input-group
+        = f.text_field :google_spreadsheet_url, value: @sheet ? @sheet.spreadsheet_url : nil, class: 'form-control'
+        .input-group-append
+          = f.submit '表示'
 div#recipe-container
   - if @sheet.present?
-    = render partial: 'recipe', locals: {sheet: @sheet}
+    = render partial: 'recipe', locals: { sheet: @sheet }
