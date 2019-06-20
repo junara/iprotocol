@@ -15,7 +15,9 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         .input-group-append
           = f.submit '表示'
 div#recipe-container
-  - if @sheet.present?
+  - if @sheet.present? && @sheet.link?
+    = render partial: 'link', locals: { sheet: @sheet }
+  - elsif @sheet.present?
     = render partial: 'recipe', locals: { sheet: @sheet }
   - else
     div.d-flex.justify-content-center.vh-100.align-items-center

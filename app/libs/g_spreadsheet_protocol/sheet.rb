@@ -3,12 +3,18 @@ require 'google/apis/sheets_v4'
 module GSpreadsheetProtocol
   class Sheet
     GOOGLE_API_KEY = ENV['GOOGLE_API_KEY']
-    attr_accessor :spreadsheet_id, :values, :protocol, :reagent, :google_api_key
+    attr_accessor :spreadsheet_id, :values, :protocol, :reagent, :google_api_key, :link
 
     def initialize(spreadsheet_id: nil, google_spreadsheet_url: nil, google_api_key: nil)
       @spreadsheet_id = get_spreadsheet_id(spreadsheet_id, google_spreadsheet_url)
       @google_api_key = google_api_key ? google_api_key : GOOGLE_API_KEY
       set_service(@google_api_key)
+    end
+
+    def link?
+      raise StandardError, 'needs values' if values.nil?
+      links = get_links.links_values
+      GSpreadsheetProtocol::Url.valid?(links.first.url)
     end
 
     def get_protocol(values: @values, options: {})
@@ -19,6 +25,11 @@ module GSpreadsheetProtocol
     def get_reagent(values: @values, options: {})
       raise StandardError, 'needs values' if values.nil?
       @reagent = GSpreadsheetProtocol::Reagent.new({ values: values }.merge(options))
+    end
+
+    def get_links(values: @values, options: {})
+      raise StandardError, 'needs values' if values.nil?
+      @link = GSpreadsheetProtocol::Link.new({ values: values }.merge(options))
     end
 
     def get_spreadsheet_values(spreadsheet_id = @spreadsheet_id)
@@ -37,7 +48,7 @@ module GSpreadsheetProtocol
     def get_spreadsheet_id(spreadsheet_id, google_spreadsheet_url)
       return spreadsheet_id if spreadsheet_id.present?
       if google_spreadsheet_url.present?
-        google_spreadsheet_url.match(/https.+\/spreadsheets\/d\/(.+)\//)[1]
+        google_spreadsheet_url.match(/https.+\/spreadsheet.+\/d\/(.+)\//)[1]
       end
     end
 

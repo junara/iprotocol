@@ -1,0 +1,14 @@
+- pp sheet
+- sheet.get_spreadsheet_values
+- sheet.get_protocol
+- protocol = sheet.protocol
+
+div.col-md-6.col-sm-12.mb-4
+  div.row.no-gutters
+    div.col-3
+      = image_tag protocol.description_value.photo, class: 'img-fluid img-thumbnail', loading: "lazy"
+    div.col-9.pl-1
+      div.h5
+        = link_to protocol.title_value.text, root_path(google_spreadsheet_id: sheet.spreadsheet_id), class: 'text-decoration-none text-secondary'
+      div
+        = truncate(protocol.description_value.text, length: 40, omission: "...")

@@ -52,3 +52,4 @@ gem 'google-api-client', '~> 0.11'
 gem "bootstrap_form", ">= 4.2.0"
 gem 'slim-rails'
 gem 'redcarpet'
+gem 'httpclient'

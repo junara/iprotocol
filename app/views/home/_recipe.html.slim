@@ -4,12 +4,14 @@
 - reagent = sheet.reagent
 
 div.container.d-none.d-sm-block
-  div.my-5
-    div.h2.text-success
-      = link_to protocol.title_value.text, sheet.spreadsheet_url, class: 'text-decoration-none text-secondary'
+  div.my-5.d-flex.align-items-baseline
+    div.h2
+      = link_to protocol.title_value.text, root_path(google_spreadsheet_id: sheet.spreadsheet_id), class: 'text-decoration-none text-success'
+    div.small
+      = link_to '(編集)', sheet.spreadsheet_url, class: 'text-decoration-none text-secondary'
   div.row
     div.col-sm
-      = image_tag protocol.description_value.photo, class: 'img-fluid img-thumbnail'
+      = image_tag protocol.description_value.photo, class: 'img-fluid img-thumbnail', loading: "lazy"
     div.col-sm
       div
         p.lead.text-dark
@@ -32,7 +34,7 @@ div.container.d-none.d-sm-block
           div.h3.text-black-50 = i
           - if value.photo.present?
             div
-              = image_tag value.photo, class: 'img-fluid img-thumbnail'
+              = image_tag value.photo, class: 'img-fluid img-thumbnail', loading: "lazy"
           div
             p.lead.text-secondary = value.text
 
@@ -40,9 +42,12 @@ div.d-block.d-sm-none.d-print-none
   div
     div.w-100
       div
-        = image_tag protocol.description_value.photo, class: 'img-fluid'
-    div.h2.text-success.p-3.mb-0
-      = link_to protocol.title_value.text, sheet.spreadsheet_url, class: 'text-decoration-none text-secondary'
+        = image_tag protocol.description_value.photo, class: 'img-fluid', loading: "lazy"
+    div.text-success.p-3.mb-0.d-flex.align-items-baseline.flex-wrap
+      div.h2
+        = link_to protocol.title_value.text, root_path(google_spreadsheet_id: sheet.spreadsheet_id), class: 'text-decoration-none  text-success'
+      div.small
+        = link_to '(編集)', sheet.spreadsheet_url, class: 'text-decoration-none text-secondary'
     div.p-3
       p.text-dark
         = protocol.description_value.text
@@ -71,7 +76,7 @@ div.d-block.d-sm-none.d-print-none
               div.col-7
                 p.text-secondary = value.text
               div.col-4
-                = image_tag value.photo, class: 'img-fluid img-thumbnail'
+                = image_tag value.photo, class: 'img-fluid img-thumbnail', loading: "lazy"
             - else
               div.col-11
                 p.text-secondary = value.text

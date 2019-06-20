@@ -1,0 +1,16 @@
+- sheet.get_links
+- result = sheet.link
+
+div.container.pt-3
+  div.d-flex.align-items-baseline.flex-wrap
+    div.h2
+      = link_to result.title_value.url, root_path(google_spreadsheet_id: sheet.spreadsheet_id), class: 'text-decoration-none text-secondary'
+    div.small
+      = link_to '(編集)', sheet.spreadsheet_url, class: 'text-decoration-none text-secondary'
+  div.lead
+    = result.description_value.url
+  div.my-5
+    div.row
+      - result.links_values.each.with_index(1) do |value, i|
+        - link_sheet = GSpreadsheetProtocol::Sheet.new(google_spreadsheet_url: value.url)
+        = render partial: 'card', locals: { sheet: link_sheet }

@@ -1,5 +1,9 @@
-<% if @sheet %>
-$("#recipe-container").html(
-  "<%= j(render partial: 'recipe', locals: {sheet: @sheet}) %>"
-);
+<% if @sheet.present? && @sheet.link? %>
+$("#recipe-container").html("<%= j(render partial: 'link', locals: {sheet: @sheet}) %>");
+<% elsif @sheet.present? %>
+$("#recipe-container").html("<%= j(render partial: 'recipe', locals: {sheet: @sheet}) %>");
+<% end %>
+
+<% if @sheet.present? %>
+history.pushState(null, null, "?google_spreadsheet_id=<%= @sheet.spreadsheet_id %>");
 <% end %>
